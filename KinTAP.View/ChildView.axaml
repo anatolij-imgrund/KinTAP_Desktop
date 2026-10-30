@@ -1,0 +1,376 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Class="KinTAP.View.ChildView"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:vm="using:KinTAP.Controller"
+            xmlns:models="using:KinTAP.Model"
+            xmlns:views="using:KinTAP.View"
+            xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+            x:DataType="vm:ChildController"
+            x:CompileBindings="False"
+            xmlns:conv="using:KinTAP.View.Converters"
+            mc:Ignorable="d"
+            d:DesignWidth="1100"
+            d:DesignHeight="900"
+            FontFamily="{StaticResource ChildFriendlyFont}">
+
+       <UserControl.Resources>
+              <conv:BooleanNegationConverter x:Key="BoolNegate"/>
+              <conv:StatusToVisibilityConverter x:Key="StatusToVis"/>
+              <conv:StatusToBackgroundConverter x:Key="StatusToBg"/>
+              <conv:StatusToStringConverter x:Key="StatusToString"/>
+              <conv:StringToBitmapConverter x:Key="StringToBitmapConv"/>
+              <conv:StringToBrushConverter x:Key="StringToBrush"/>
+              <conv:PriorityToBorderBrushConverter x:Key="PriorityToBrush"/>
+       </UserControl.Resources>
+
+	<DockPanel Margin="10"
+                     Background="{Binding CurrentChild.SelectedThemeColor, Converter={StaticResource StringToBrush}}">
+		<Border DockPanel.Dock="Top"
+                     Background="LightSkyBlue"
+                     CornerRadius="5"
+                     Padding="10"
+                     Margin="0,0,0,10">
+              <Grid ColumnDefinitions="Auto, Auto, *">
+              
+              <Border Grid.Column="0"
+                     Width="60"
+                     Height="60"
+                     Background="WhiteSmoke"
+                     CornerRadius="30"
+                     ClipToBounds="True"
+                     Margin="0,0,10,0"
+                     VerticalAlignment="Center"
+                     BoxShadow="0 2 10 2 #CCCCCC">
+                     <Image Stretch="UniformToFill">
+                            <Image.Source>
+                                   <Binding Path="CurrentChild.SelectedAvatarPath"
+                                          Converter="{StaticResource StringToBitmapConv}"
+                                          TargetNullValue="/Assets/default_avatar.png"/>
+                            </Image.Source>
+                     </Image>
+              </Border>
+              <StackPanel Grid.Column="1"
+                            Orientation="Vertical"
+                            Spacing="5"
+                            VerticalAlignment="Center"
+                            Margin="0,0,20,0">
+
+			<TextBlock Text="{Binding CurrentChild.Name}"
+                                   FontSize="26"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,10,0"/>
+                     <StackPanel Orientation="Horizontal"
+                                   Spacing="5"
+                                   VerticalAlignment="Bottom">
+			<TextBlock Text="Deine Punkte:"
+                                   FontSize="14"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,2,0"/>
+			<TextBlock Text="{Binding CurrentChild.Points}"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="2,0,0,0"/>
+                     </StackPanel>
+		</StackPanel>
+
+                     <Button x:Name="ChildLogoutButton"
+                        Grid.Column="2"
+                        Content="⮌"
+                        FontWeight="Bold"
+                        FontSize="24"
+                        Width="60"
+                        Height="60"
+                        CornerRadius="30"
+                        Background="WhiteSmoke"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Right"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+			</Grid>
+		</Border>
+
+       <TabControl>
+              <TabItem Header="Deine Aufgaben">
+		       <ScrollViewer Padding="5">
+			       <ItemsControl ItemsSource="{Binding VisibleTasks}"
+                                   x:Name="TasksItemsControl">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="models:TaskItem">
+                                          <Border BorderBrush="{Binding Priority, Converter={StaticResource PriorityToBrush}}"
+                                                 BorderThickness="1"
+                                                 CornerRadius="3"
+                                                 Padding="10"
+                                                 Margin="5"
+                                                 Background="{Binding Status, Converter={StaticResource StatusToBg}}"
+                                                 BoxShadow="0 2 10 2 #CCCCCC">
+						       <Grid ColumnDefinitions="*, Auto"
+                                                        MinHeight="60">
+								<StackPanel Grid.Column="0"
+                                                                      Spacing="3"
+                                                                      VerticalAlignment="Center">
+									<TextBlock Text="{Binding Title}"
+                                                                             FontWeight="SemiBold"
+                                                                             FontSize="22"
+                                                                             TextWrapping="Wrap"/>
+									<TextBlock Text="{Binding Description}"
+                                                                             Foreground="DimGray"
+                                                                             FontSize="18"
+                                                                             TextWrapping="Wrap"/>
+									<TextBlock Text="{Binding PointsValue, StringFormat='+{0} Punkte'}"
+                                                                             Foreground="Green"
+                                                                             FontSize="14"/>
+								</StackPanel>
+                                                        <Panel Grid.Column="1"
+                                                               VerticalAlignment="Stretch"
+                                                               HorizontalAlignment="Right">
+
+                                                               <Button Command="{Binding DataContext.CompleteTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type views:ChildView}}}"
+                                                                      CommandParameter="{Binding}" 
+                                                                      Content="Fertig!"
+                                                                      IsVisible="{Binding Status, Converter={StaticResource StatusToVis}, ConverterParameter=Pending}"
+                                                                      Padding="10,10"
+                                                                      FontSize="20"
+                                                                      FontWeight="Bold"
+                                                                      Foreground="DarkGreen"
+                                                                      Background="LightGreen"
+                                                                      VerticalAlignment="Stretch"
+                                                                      HorizontalAlignment="Right"
+                                                                      HorizontalContentAlignment="Center"
+                                                                      VerticalContentAlignment="Center"
+                                                                      MinWidth="100"/>
+
+                                                               <TextBlock Text="Muss von den Eltern bestätigt werden..."
+                                                                             IsVisible="{Binding Status, Converter={StaticResource StatusToVis}, ConverterParameter=CompletedByChild}"
+                                                                             Foreground="DarkSlateGray"
+                                                                             FontStyle="Italic"
+                                                                             FontSize="16"
+                                                                             VerticalAlignment="Center"/>
+                                                        </Panel>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Vertical"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
+		</ScrollViewer>
+       </TabItem>
+
+       <TabItem Header="Belohnungen">
+              <Grid RowDefinitions="*, Auto, Auto"
+                     Margin="5">                     
+                     <ScrollViewer Grid.Row="0">
+                            <ItemsControl ItemsSource="{Binding AvailableRewards}"
+                                          x:Name="RewardsItemsControl">
+                                   <ItemsControl.ItemsPanel>
+                                          <ItemsPanelTemplate>
+                                                 <WrapPanel Orientation="Horizontal"/>
+                                          </ItemsPanelTemplate>
+                                   </ItemsControl.ItemsPanel>
+                                   <ItemsControl.ItemTemplate>
+                                          <DataTemplate x:DataType="models:Reward">
+                                                 <Border BorderBrush="DarkGray"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Width="170"
+                                                        MinHeight="150"
+                                                        Padding="10"
+                                                        Margin="5"
+                                                        Background="WhiteSmoke"
+                                                        BoxShadow="0 2 10 2 #CCCCCC">
+                                                        <StackPanel Spacing="5">
+                                                        <TextBlock Text="{Binding Name}"
+                                                                      FontWeight="SemiBold"
+                                                                      FontSize="18"
+                                                                      TextWrapping="Wrap"/>
+                                                        <TextBlock Text="{Binding Description}"
+                                                                      Foreground="DimGray"
+                                                                      FontSize="14"
+                                                                      TextWrapping="Wrap"
+                                                                      MinHeight="30"/>
+                                                        <TextBlock Text="{Binding Cost, StringFormat='-{0} Punkte'}"
+                                                                      Foreground="Purple"
+                                                                      FontWeight="SemiBold"
+                                                                      FontSize="13"
+                                                                      HorizontalAlignment="Center"
+                                                                      Margin="0,5,0,5"/>
+                                                        <Button Content="Bekommen"
+                                                               Command="{Binding DataContext.BuyRewardCommand, RelativeSource={RelativeSource AncestorType={x:Type views:ChildView}}}"
+                                                               CommandParameter="{Binding}"
+                                                               HorizontalAlignment="Stretch"
+                                                               HorizontalContentAlignment="Center"
+                                                               Padding="10,5"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"
+                                                               Background="Gold"/>
+                                                        </StackPanel>
+                                                 </Border>
+                                          </DataTemplate>
+                                   </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                     </ScrollViewer>
+
+                     
+                     <StackPanel Grid.Row="1">
+                     <Separator/>              
+                     <TextBlock Text="{Binding RewardStatusMessage}"
+                                   Foreground="OrangeRed"
+                                   TextAlignment="Center"
+                                   FontSize="16"
+                                   Margin="0,10,0,0"/>
+                                   <!--IsVisible="{Binding RewardStatusMessage, Converter={StaticResource StringIsNullOrEmptyConverter}, ConverterParameter=True}"-->
+                     </StackPanel>
+                     <StackPanel Grid.Row="2"
+                                   Margin="0,15,0,0">
+                            <Separator/>
+                            <TextBlock Text="Meine Belohnungen"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Margin="0,10,0,5"/>
+                            <ScrollViewer MaxHeight="150">
+                                   <ItemsControl ItemsSource="{Binding MyClaimedRewards}">
+                                          <ItemsControl.ItemsPanel>
+                                                 <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"/>
+                                                 </ItemsPanelTemplate>
+                                          </ItemsControl.ItemsPanel>
+                                          <ItemsControl.ItemTemplate>
+                                                 <DataTemplate x:DataType="models:Reward">
+                                                        <Border BorderBrush="DarkGray"
+                                                               BorderThickness="1"
+                                                               CornerRadius="4"
+                                                               MinWidth="50"
+                                                               MinHeight="50"
+                                                               Padding="10"
+                                                               Margin="5"
+                                                               Background="WhiteSmoke"
+                                                               BoxShadow="0 2 10 2 #CCCCCC">
+                                                               <StackPanel Spacing="5">
+                                                                      <TextBlock Text="{Binding Name}"
+                                                                                    FontWeight="SemiBold"/>
+                                                                      <TextBlock Text="{Binding Description}"
+                                                                                    Foreground="Gray"
+                                                                                    FontSize="11"
+                                                                                    TextWrapping="Wrap"/>
+                                                               </StackPanel>
+                                                        </Border>
+                                                 </DataTemplate>
+                                          </ItemsControl.ItemTemplate>
+                                   </ItemsControl>
+                            </ScrollViewer>
+                     </StackPanel>
+              </Grid>
+	</TabItem>
+
+       <TabItem Header="Einstellungen">
+              <ScrollViewer Padding="10">
+                     <StackPanel Spacing="15">
+                            <TextBlock Text="Wähle dein Bild:"
+                                          FontWeight="Bold"
+                                          FontSize="16"/>
+                                   <ListBox ItemsSource="{Binding AvailableAvatarPath}"
+                                                 SelectedItem="{Binding CurrentChild.SelectedAvatarPath, Mode=TwoWay}"
+                                                 Background="Transparent"
+                                                 BorderThickness="0">                                                 
+                                          <ListBox.ItemsPanel>
+                                                 <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"
+                                                                      ItemWidth="80"
+                                                                      ItemHeight="80"/>
+                                                 </ItemsPanelTemplate>
+                                          </ListBox.ItemsPanel>
+                                          <ListBox.Styles>
+                                                 <Style Selector="ListBoxItem:selected /template/ Border">
+                                                        <Setter Property="BorderBrush" Value="DodgerBlue"/>
+                                                        <Setter Property="BorderThickness" Value="3"/>
+                                                 </Style>
+                                                 <Style Selector="Border.AvatarItem:pointerover">
+                                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                 </Style>
+                                          </ListBox.Styles>
+                                          <ListBox.ItemTemplate>
+                                                 <DataTemplate x:DataType="sys:String">
+                                                        <Border Width="70"
+                                                               Height="70"
+                                                               CornerRadius="35"
+                                                               Margin="5"
+                                                               Padding="0"
+                                                               ClipToBounds="True"
+                                                               BorderThickness="1"
+                                                               BorderBrush="Transparent"
+                                                               Classes="AvatarItem">
+                                                               <Image Stretch="UniformToFill">
+                                                                      <Image.Source>
+                                                                             <Binding Path="."
+                                                                                    Converter="{StaticResource StringToBitmapConv}" FallbackValue="/Assets/default_avatar.png"/>
+                                                                      </Image.Source>
+                                                                      <Image.OpacityMask>
+                                                                             <VisualBrush Stretch="Fill">
+                                                                                    <VisualBrush.Visual>
+                                                                                           <Ellipse Width="70"
+                                                                                                  Height="70"
+                                                                                                  Fill="Black"/>
+                                                                                    </VisualBrush.Visual>
+                                                                             </VisualBrush>
+                                                                      </Image.OpacityMask>
+                                                               </Image>
+                                                        </Border>
+                                                 </DataTemplate>
+                                          </ListBox.ItemTemplate>
+                                   </ListBox>
+
+                                   <TextBlock Text="Wähle deine Hintergrundfarbe:"
+                                                 FontWeight="Bold"
+                                                 FontSize="16"
+                                                 Margin="0,20,0,0"/>
+                                   <ListBox ItemsSource="{Binding AvailableThemeColorKeys}"
+                                                 SelectedItem="{Binding CurrentChild.SelectedThemeColor, Mode=TwoWay}"
+                                                 Background="Transparent"
+                                                 BorderThickness="0">
+                                          <ListBox.ItemsPanel>
+                                                 <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"
+                                                                      ItemWidth="50"
+                                                                      ItemHeight="50"/>
+                                                 </ItemsPanelTemplate>
+                                          </ListBox.ItemsPanel>
+                                          <ListBox.Styles>
+                                                 <Style Selector="Border.ColorItem:selected">
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="BorderThickness" Value="3"/>
+                                                 </Style>
+                                                 <Style Selector="Border.ColorItem:pointover">
+                                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                 </Style>
+                                          </ListBox.Styles>
+                                          <ListBox.ItemTemplate>
+                                                 <DataTemplate x:DataType="sys:String">
+                                                        <Border Width="40"
+                                                               Height="40"
+                                                               CornerRadius="3"
+                                                               Margin="5"
+                                                               BorderBrush="DarkGray"
+                                                               BorderThickness="1"
+                                                               Background="{Binding Converter={StaticResource StringToBrush}}"
+                                                               Classes="ColorItem">
+                                                        </Border>
+                                                 </DataTemplate>
+                                          </ListBox.ItemTemplate>
+                                   </ListBox>
+                            </StackPanel>
+                     </ScrollViewer>
+              </TabItem>
+       </TabControl> 
+       </DockPanel>      
+</UserControl>

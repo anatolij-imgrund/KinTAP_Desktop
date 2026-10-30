@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinTAP.View", "KinTAP.View\KinTAP.View.csproj", "{4F8BE1FB-9388-4292-95BF-436ACB8F83B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinTAP.Model", "KinTAP.Model\KinTAP.Model.csproj", "{B0051AC6-7B5C-44F6-9B00-8FD13828A967}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinTAP.Controller", "KinTAP.Controller\KinTAP.Controller.csproj", "{A56BFA60-54ED-4A9C-BDE5-F10FE6131E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinTAP.Persistence", "KinTAP.Persistence\KinTAP.Persistence.csproj", "{EB0D1BCB-F095-4706-A543-311E717B0729}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinTAP.Services", "KinTAP.Services\KinTAP.Services.csproj", "{E2F3EA42-AE80-4543-91C2-5F2A08BD7B63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F8BE1FB-9388-4292-95BF-436ACB8F83B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8BE1FB-9388-4292-95BF-436ACB8F83B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8BE1FB-9388-4292-95BF-436ACB8F83B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8BE1FB-9388-4292-95BF-436ACB8F83B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0051AC6-7B5C-44F6-9B00-8FD13828A967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0051AC6-7B5C-44F6-9B00-8FD13828A967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0051AC6-7B5C-44F6-9B00-8FD13828A967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0051AC6-7B5C-44F6-9B00-8FD13828A967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56BFA60-54ED-4A9C-BDE5-F10FE6131E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56BFA60-54ED-4A9C-BDE5-F10FE6131E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56BFA60-54ED-4A9C-BDE5-F10FE6131E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56BFA60-54ED-4A9C-BDE5-F10FE6131E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0D1BCB-F095-4706-A543-311E717B0729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0D1BCB-F095-4706-A543-311E717B0729}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0D1BCB-F095-4706-A543-311E717B0729}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0D1BCB-F095-4706-A543-311E717B0729}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F3EA42-AE80-4543-91C2-5F2A08BD7B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F3EA42-AE80-4543-91C2-5F2A08BD7B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F3EA42-AE80-4543-91C2-5F2A08BD7B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F3EA42-AE80-4543-91C2-5F2A08BD7B63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

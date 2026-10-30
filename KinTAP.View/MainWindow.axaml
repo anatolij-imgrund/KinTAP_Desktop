@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:KinTAP.View"
+        xmlns:models="using:KinTAP.Model"
+        mc:Ignorable="d" 
+        d:DesignWidth="1100"
+        d:DesignHeight="900"
+        x:Class="KinTAP.View.MainWindow"
+        Title="KinTAP"
+        Icon="Assets/Appicon.png"
+        Name="KinTAP"
+        FontFamily="{StaticResource ChildFriendlyFont}">
+
+    <Panel x:Name="MainContentArea">        
+        <StackPanel x:Name="SelectionPanel"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="15">
+            <TextBlock Text="Wer bist Du?"
+                        FontWeight="Bold"
+                        FontSize="30"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,15"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Spacing="30">
+            <Button x:Name="ParentModeButton"
+                    Width="150"
+                    Height="150"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="0">
+                <Image Source="/Assets/Parent.png" 
+                        Stretch="Uniform"
+                        Margin="10"/>
+            </Button>
+            
+            <Button x:Name="ChildModeButton"
+                    Width="150"
+                    Height="150"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="0">
+                <Image Source="/Assets/Child.png"
+                        Stretch="Uniform"
+                        Margin="10"/>
+            </Button>
+            </StackPanel>
+            <ListBox x:Name="ChildSelectionList"
+                    MinHeight="100"
+                    Width="300"
+                    IsVisible="False">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:Child">
+                        <TextBlock Text="{Binding Name}"
+                                    FontSize="20"
+                                    HorizontalAlignment="Center"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button x:Name="LoginAsChildButton"
+                    Content="Start"
+                    Background="LightGreen"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    FontSize="22"
+                    FontWeight="Bold"
+                    Foreground="DarkGreen"
+                    Padding="15,10"
+                    IsVisible="False"
+                    IsEnabled="False"/>
+        </StackPanel>
+    </Panel>
+</Window>

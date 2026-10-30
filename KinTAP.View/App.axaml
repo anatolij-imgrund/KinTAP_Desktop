@@ -1,0 +1,28 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="KinTAP.View.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    
+    <Application.Resources>
+        <Color x:Key="ThemeColorLightBlue">#ADD8E6</Color>
+        <Color x:Key="ThemeColorPaleGreen">#98FB98</Color>
+        <Color x:Key="ThemeColorLavender">#E6E6FA</Color>
+        <Color x:Key="ThemeColorLightYellow">#FFFFE0</Color>
+        <Color x:Key="ThemeColorDefault">#F0F8FF</Color>
+        <SolidColorBrush x:Key="ThemeBrushLightBlue" Color="{StaticResource ThemeColorLightBlue}"/>
+        <SolidColorBrush x:Key="ThemeBrushPaleGreen" Color="{StaticResource ThemeColorPaleGreen}"/>
+        <SolidColorBrush x:Key="ThemeBrushLavender" Color="{StaticResource ThemeColorLavender}"/>
+        <SolidColorBrush x:Key="ThemeBrushLightYellow" Color="{StaticResource ThemeColorLightYellow}"/>
+        <SolidColorBrush x:Key="ThemeBrushDefault" Color="{StaticResource ThemeColorDefault}"/>
+        <!--Itim , Grandstander ? , Playpen, Shantell, -->
+        <FontFamily x:Key="ChildFriendlyFont">
+            avares://KinTAP.View/Assets/Fonts#Playpen
+        </FontFamily>
+    </Application.Resources>    
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+</Application>
